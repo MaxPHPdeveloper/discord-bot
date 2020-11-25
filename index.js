@@ -14,8 +14,9 @@ client.on("message", async message => {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             var arg = String(message.content.replace("!play ", ""));
+            console.log(arg);
             var r = (await yts(arg));
-            var videos = r.videos.slice(0, 1)
+            var videos = r.videos.slice(0, 1);
             var url = String(videos.url);
             console.log(url);
             message.member.voice.channel.join().then(connection => {
