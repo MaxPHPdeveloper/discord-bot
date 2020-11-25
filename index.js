@@ -5,7 +5,7 @@ const yts = require('yt-search')
 
 const client = new Discord.Client();
 
-var queue = [], d = 0;
+var queue = [], d = 0, isPlaying = false;
 
 client.once("ready", () => {
     console.log("Ready!");
@@ -31,9 +31,14 @@ client.on("message", async message => {
         //se è un link
         else {
             var url = message.content.replace("!play ", "");
-            queue[d] = url;
-            play(queue, d);
-            d++;
+            if (!isPlaying) {
+                queue[d] = url;
+                play(queue, 0);
+            }
+            else {
+                d++;
+                queue[d] = url;
+            }
         }
     }
 
@@ -56,34 +61,64 @@ client.on("message", async message => {
         let collected = await message.channel.awaitMessages(filter, { max: 1, time: 60000, });
         switch (collected.first().content) {
             case "1":
-                queue[d] = links[1];
-                play(queue, d);
-                d++;
-                message.channel.send(`Added to queue.`);
+                if (!isPlaying) {
+                    queue[d] = links[1];
+                    message.channel.send(`Added to queue.`);
+                    play(queue, 0);
+                }
+                else {
+                    d++;
+                    queue[d] = links[1];
+                    message.channel.send(`Added to queue.`);
+                }
                 break;
             case "2":
-                queue[d] = links[2];
-                play(queue, d);
-                d++;
-                message.channel.send(`Added to queue.`);
+                if (!isPlaying) {
+                    queue[d] = links[2];
+                    message.channel.send(`Added to queue.`);
+                    play(queue, 0);
+                }
+                else {
+                    d++;
+                    queue[d] = links[2];
+                    message.channel.send(`Added to queue.`);
+                }
                 break;
             case "3":
-                queue[d] = links[3];
-                play(queue, d);
-                d++;
-                message.channel.send(`Added to queue.`);
+                if (!isPlaying) {
+                    queue[d] = links[3];
+                    message.channel.send(`Added to queue.`);
+                    play(queue, 0);
+                }
+                else {
+                    d++;
+                    queue[d] = links[3];
+                    message.channel.send(`Added to queue.`);
+                }
                 break;
             case "4":
-                queue[d] = links[4];
-                play(queue, d);
-                d++;
-                message.channel.send(`Added to queue.`);
+                if (!isPlaying) {
+                    queue[d] = links[4];
+                    message.channel.send(`Added to queue.`);
+                    play(queue, 0);
+                }
+                else {
+                    d++;
+                    queue[d] = links[4];
+                    message.channel.send(`Added to queue.`);
+                }
                 break;
             case "5":
-                queue[d] = links[5];
-                play(queue, d);
-                d++;
-                message.channel.send(`Added to queue.`);
+                if (!isPlaying) {
+                    queue[d] = links[5];
+                    message.channel.send(`Added to queue.`);
+                    play(queue, 0);
+                }
+                else {
+                    d++;
+                    queue[d] = links[5];
+                    message.channel.send(`Added to queue.`);
+                }
                 break;
 
             default:
@@ -93,15 +128,12 @@ client.on("message", async message => {
     }
 
 
-
     else if (message.content.startsWith("!stop")) {
-        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
-        if (message.guild.connection) {
+        if (message.guild.voice.connection) {
             message.channel.send(`Lascio a voi le mie fike bianke, prendetevene cura. Bella a tutti.`);
             message.guild.voiceConnection.disconnect();
             clearQueue();
         }
-
     }
 
 
@@ -111,9 +143,7 @@ client.on("message", async message => {
 
 
     function clearQueue() {
-        for (var p = 0; p < queue.length; p++) {
-            queue[p] = undefined;
-        }
+        queue.splice(0, queue.length - 1);
         d = 0;
         return;
     }
@@ -121,9 +151,11 @@ client.on("message", async message => {
     function play(queue, d) {
         console.log(queue);
         message.member.voice.channel.join().then(connection => {
+            isPlaying = true;
             connection.play(ytdl(queue[d], { filter: "audioonly" }).on("end", function () {
-                if (queue[d + 1] != undefined) {
-                    play(queue, d + 1);
+                if (queue[1] != undefined) {
+                    queue.shift();
+                    play(queue, 0);
                 }
                 else {
                     connection.disconnect;
@@ -133,7 +165,6 @@ client.on("message", async message => {
         });
     }
 });
-
 
 
 
