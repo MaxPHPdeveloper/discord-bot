@@ -17,7 +17,7 @@ client.on("message", async message => {
             console.log(arg);
             var r = (await yts(arg));
             var videos = r.videos.slice(0, 1);
-            var url = String(videos.url);
+            var url = videos.url;
             console.log(url);
             message.member.voice.channel.join().then(connection => {
                 connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
