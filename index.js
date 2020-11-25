@@ -16,6 +16,7 @@ client.on("message", async message => {
             var arg = message.content.replace("!play ", "");
             const r = await yts(arg);
             const videos = r.videos.slice(0, 1);
+            console.log(videos);
             var url = videos.url;
             console.log(url);
             message.member.voice.channel.join().then(connection => {
