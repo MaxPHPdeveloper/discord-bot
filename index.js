@@ -34,7 +34,7 @@ client.on("message", message => {
         const r = await yts(arg);
         const videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
-            message.channel.send(`${i}) | ${v.title} (${v.timestamp}) | ${v.author.name}`);
+            message.channel.send(`${i})  ${v.title} (${v.timestamp}) | ${v.author.name}`);
             i++;
         })
         message.channel.send(`Scegli un numero da 1 a 5.`);
