@@ -14,9 +14,7 @@ client.on("message", async message => {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             var arg = String(message.content.replace("!play ", ""));
-            var r = (await yts(arg)).catch(() => {
-                return message.channel.send('Video non trovato');
-            });
+            var r = (await yts(arg));
             var videos = r.videos.slice(0, 1)
             var url = String(videos.url);
             message.member.voice.channel.join().then(connection => {
@@ -33,9 +31,7 @@ client.on("message", async message => {
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         var arg = String(message.content.replace("!youtube ", ""));
-        var r = (await yts(arg)).catch(() => {
-            return message.channel.send('Video non trovato');
-        });
+        var r = (await yts(arg));
         var videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
             message.channel.send(`${i}° | ${v.title} (${v.timestamp}) | ${v.author.name}`);
@@ -94,7 +90,7 @@ client.on("message", async message => {
             (connection => { connection.disconnect(); });
     }
     else if (message.content.startsWith("!help")) {
-        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t               | per fermare la coda\n\nASSGHARAAA`);
+        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t              | per fermare la coda\n\nASSGHARAAA`);
     }
 });
 
