@@ -1,19 +1,12 @@
-const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
-const ffmpeg = require('ffmpeg');
-const yts = require('yt-search')
-
-const client = new Discord.Client();
-
-client.once("ready", () => {
-    console.log("Ready!");
-});
-
 client.on("message", async message => {
     if (message.content.startsWith("!play")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
-            var arg = message.content.replace("!play ", ""), r = await yts(arg), videos = r.videos.slice(0, 1), url = String(videos.url);
+            var arg = message.content.replace("!play ", "");
+            var r = (await yts(arg)).catch(() => {
+                return message.channel.send('Video non trovato');
+            });
+            var videos = r.videos.slice(0, 1), url = String(videos.url);
             message.member.voice.channel.join().then(connection => {
                 connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
             });
@@ -27,7 +20,11 @@ client.on("message", async message => {
     }
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
-        var arg = message.content.replace("!youtube ", ""), r = await yts(arg), videos = r.videos.slice(0, 5), i = 1;
+        var arg = message.content.replace("!youtube ", "");
+        var r = (await yts(arg)).catch(() => {
+            return message.channel.send('Video non trovato');
+        });
+        var videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
             message.channel.send(`${i}° | ${v.title} (${v.timestamp}) | ${v.author.name}`);
             i++;
