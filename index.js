@@ -28,7 +28,7 @@ client.on("message", async message => {
 
         //se è un link
         else {
-                queue[0] = url;
+                queue[d] = url;
                 play(queue);
         }
     }
@@ -52,59 +52,29 @@ client.on("message", async message => {
         let collected = await message.channel.awaitMessages(filter, { max: 1, time: 60000, });
         switch (collected.first().content) {
             case "1":
-                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[1];
                     message.channel.send(`Added to queue.`);
-                }
-                else {
-                    queue[0] = links[1];
-                    play(queue);
-                }
                 break;
             case "2":
-                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[2];
                     message.channel.send(`Added to queue.`);
-                }
-                else {
-                    queue[0] = links[2];
-                    play(queue);
-                }
                 break;
             case "3":
-                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[3];
                     message.channel.send(`Added to queue.`);
-                }
-                else {
-                    queue[0] = links[3];
-                    play(queue);
-                }
                 break;
             case "4":
-                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[4];
                     message.channel.send(`Added to queue.`);
-                }
-                else {
-                    queue[0] = links[4];
-                    play(queue);
-                }
                 break;
             case "5":
-                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[5];
                     message.channel.send(`Added to queue.`);
-                }
-                else {
-                    queue[0] = links[5];
-                    play(queue);
-                }
                 break;
 
             default:
