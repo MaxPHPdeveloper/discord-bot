@@ -15,7 +15,7 @@ client.on("message", async message => {
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             var arg = message.content.replace("!play ", "");
             console.log(arg);
-            var r = (await yts(arg));
+            var r = yts(arg);
             console.log(yts(arg));
             var videos = r.videos.slice(0, 1);
             var url = videos.url;
