@@ -14,24 +14,17 @@ client.on("message", async message => {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
         const connection = await message.member.voice.channel.join();
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
-            const arg = message.content.replace("!play ", "");
-            const r = await yts(arg);
-            const videos = r.videos.slice(0, 1);
-            var url = videos.url;
-            console.log(url);
-            connection.playStream(ytdl(url, { filter: "audioonly" }));
+            var arg = message.content.replace("!play ", ""), r = await yts(arg), videos = r.videos.slice(0, 1), url = String(videos.url);
+            connection.play(ytdl(url, { filter: "audioonly" }));
         }
         else {
             var url = message.content.replace("!play ", "");
-            connection.playStream(ytdl(url, { filter: "audioonly" }));
+            connection.play(ytdl(url, { filter: "audioonly" }));
         }
     }
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voiceChannel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
-        const arg = message.content.replace("!youtube ", "");
-        const r = await yts(arg);
-        const videos = r.videos.slice(0, 5);
-        var i = 1;
+        var arg = message.content.replace("!youtube ", ""), r = await yts(arg), videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
             message.channel.send(`${i}° | ${v.title} (${v.timestamp}) | ${v.author.name}`);
             i++;
@@ -43,7 +36,7 @@ client.on("message", async message => {
         //da finire, manca la queue da stoppare
     }
     else if (message.content.startsWith("!help")) {
-        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t| per fermare la coda\n\nASSGHARAAA`);
+        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t  | per fermare la coda\n\nASSGHARAAA`);
     }
     else if (!message.author.bot) return message.channel.send(`Coooos? Usa !help per scoprire tutti i comandi disponibili.`);
 });
