@@ -40,6 +40,7 @@ client.on("message", async message => {
             links[i] = v.url;
             i++;
         })
+        i = 1;
         message.channel.send(`Scegli un numero da 1 a 5.`);
         const filter = m => m.author.id === message.author.id;
         let collected = await message.channel.awaitMessages(filter, { max: 1, time: 60000, });
