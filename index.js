@@ -26,7 +26,7 @@ client.on("message", async message => {
         }
     }
     else if (message.content.startsWith("!youtube")) {
-        if (!message.member.voiceChannel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
+        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         var arg = message.content.replace("!youtube ", ""), r = await yts(arg), videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
             message.channel.send(`${i}° | ${v.title} (${v.timestamp}) | ${v.author.name}`);
@@ -34,10 +34,7 @@ client.on("message", async message => {
         })
         message.channel.send(`Scegli un numero da 1 a 5.`);
         const filter = m => m.author.id === message.author.id;
-        message.channel.awaitMessages(filter, {
-            max: 1,
-            time: 10000,
-        }).then(async (collected) => {
+        message.channel.awaitMessages(filter, { max: 1, time: 10000, }).then(async (collected) => {
             switch (collected.first().content) {
                 case "1":
                     var video1 = r.videos.slice(0, 1);
@@ -84,11 +81,11 @@ client.on("message", async message => {
         });
     }
     else if (message.content.startsWith("!stop")) {
-        if (!message.member.voiceChannel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
-        //da finire, manca la queue da stoppare
+        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
+            (connection => { connection.disconnect(); });
     }
     else if (message.content.startsWith("!help")) {
-        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t             | per fermare la coda\n\nASSGHARAAA`);
+        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t              | per fermare la coda\n\nASSGHARAAA`);
     }
 });
 
