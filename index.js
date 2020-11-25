@@ -31,7 +31,7 @@ client.on("message", message => {
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         const arg = message.content.replace("!youtube ", "");
-        const r = await yts(arg);
+        const r = yts(arg);
         const videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
             message.channel.send(`${i})  ${v.title} (${v.timestamp}) | ${v.author.name}`);
