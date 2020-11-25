@@ -5,7 +5,7 @@ const yts = require('yt-search')
 
 const client = new Discord.Client();
 
-var queue = [], d = 0, isPlaying = false;
+var queue = [], d = 0;
 
 client.once("ready", () => {
     console.log("Ready!");
@@ -28,15 +28,8 @@ client.on("message", async message => {
 
         //se è un link
         else {
-            var url = message.content.replace("!play ", "");
-            if (!isPlaying) {
-                queue[d] = url;
-                play(queue, 0);
-            }
-            else {
-                d++;
-                queue[d] = url;
-            }
+                queue[0] = url;
+                play(queue);
         }
     }
 
@@ -59,63 +52,58 @@ client.on("message", async message => {
         let collected = await message.channel.awaitMessages(filter, { max: 1, time: 60000, });
         switch (collected.first().content) {
             case "1":
-                if (!isPlaying) {
-                    queue[d] = links[1];
-                    message.channel.send(`Added to queue.`);
-                    play(queue, 0);
-                }
-                else {
+                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[1];
                     message.channel.send(`Added to queue.`);
+                }
+                else {
+                    queue[0] = links[1];
+                    play(queue);
                 }
                 break;
             case "2":
-                if (!isPlaying) {
-                    queue[d] = links[2];
-                    message.channel.send(`Added to queue.`);
-                    play(queue, 0);
-                }
-                else {
+                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[2];
                     message.channel.send(`Added to queue.`);
+                }
+                else {
+                    queue[0] = links[2];
+                    play(queue);
                 }
                 break;
             case "3":
-                if (!isPlaying) {
-                    queue[d] = links[3];
-                    message.channel.send(`Added to queue.`);
-                    play(queue, 0);
-                }
-                else {
+                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[3];
                     message.channel.send(`Added to queue.`);
+                }
+                else {
+                    queue[0] = links[3];
+                    play(queue);
                 }
                 break;
             case "4":
-                if (!isPlaying) {
-                    queue[d] = links[4];
-                    message.channel.send(`Added to queue.`);
-                    play(queue, 0);
-                }
-                else {
+                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[4];
                     message.channel.send(`Added to queue.`);
+                }
+                else {
+                    queue[0] = links[4];
+                    play(queue);
                 }
                 break;
             case "5":
-                if (!isPlaying) {
-                    queue[d] = links[5];
-                    message.channel.send(`Added to queue.`);
-                    play(queue, 0);
-                }
-                else {
+                if (connection.dispatcher) {
                     d++;
                     queue[d] = links[5];
                     message.channel.send(`Added to queue.`);
+                }
+                else {
+                    queue[0] = links[5];
+                    play(queue);
                 }
                 break;
 
@@ -142,23 +130,22 @@ client.on("message", async message => {
 
     function clearQueue() {
         queue.splice(0, queue.length - 1);
-        d = 0;
         return;
     }
 
-    function play(queue, d) {
+    function play(queue) {
         console.log(queue);
+        console.log(connection.dispatcher);
         message.member.voice.channel.join().then(connection => {
+            console.log(queue);
             if (!connection.dispatcher) {
-                connection.play(ytdl(queue[d], { filter: "audioonly" }).on("end", function () {
+                connection.play(ytdl(queue[0], { filter: "audioonly" }).on("end", function () {
                     if (queue[1] != undefined) {
                         queue.shift();
-                        play(queue, 0);
+                        play(queue);
                     }
+                    else return;
                 }));
-            }
-            else {
-                return;
             }
         });
     }
