@@ -9,25 +9,17 @@ client.once("ready", () => {
     console.log("Ready!");
 });
 
-client.on("message", async message => {
+client.on("message", message => {
     if (message.content.startsWith("!play")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
-            var arg = message.content.replace("!play ", "");
-            const r = await yts(arg);
+            const arg = message.content.replace("!play ", "");
+            const r = yts(arg);
             const videos = r.videos.slice(0, 1);
-            console.log(videos);
             var url = videos.url;
-            console.log(url);
             message.member.voice.channel.join().then(connection => {
                 connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
             });
-            /*
-            var videos = r.videos.slice(0, 1);
-            var url = videos.url;
-            message.member.voice.channel.join().then(connection => {
-                connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
-            });*/
         }
         else {
             var url = message.content.replace("!play ", "");
@@ -38,7 +30,7 @@ client.on("message", async message => {
     }
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
-        var arg = message.content.replace("!youtube ", "");
+        const arg = message.content.replace("!youtube ", "");
         const r = await yts(arg);
         const videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
@@ -47,38 +39,38 @@ client.on("message", async message => {
         })
         message.channel.send(`Scegli un numero da 1 a 5.`);
         const filter = m => m.author.id === message.author.id;
-        message.channel.awaitMessages(filter, { max: 1, time: 30000, }).then(async (collected) => {
+        message.channel.awaitMessages(filter, { max: 1, time: 60000, }).then(async (collected) => {
             switch (collected.first().content) {
                 case "1":
-                    var video1 = r.videos.slice(0, 1);
+                    const video1 = r.videos.slice(0, 1);
                     var url1 = video1.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url1, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "2":
-                    var video2 = r.videos.slice(1, 2);
+                    const video2 = r.videos.slice(1, 2);
                     var url2 = video2.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url2, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "3":
-                    var video3 = r.videos.slice(2, 3);
+                    const video3 = r.videos.slice(2, 3);
                     var url3 = video3.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url3, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "4":
-                    var video4 = r.videos.slice(3, 4);
+                    const video4 = r.videos.slice(3, 4);
                     var url4 = video4.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url4, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "5":
-                    var video5 = r.videos.slice(4, 5);
+                    const video5 = r.videos.slice(4, 5);
                     var url5 = video5.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url5, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
