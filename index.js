@@ -43,35 +43,35 @@ client.on("message", message => {
             switch (collected.first().content) {
                 case "1":
                     const video1 = r.videos.slice(0, 1);
-                    var url1 = video1.url;
+                    const url1 = video1.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url1, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "2":
                     const video2 = r.videos.slice(1, 2);
-                    var url2 = video2.url;
+                    const url2 = video2.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url2, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "3":
                     const video3 = r.videos.slice(2, 3);
-                    var url3 = video3.url;
+                    const url3 = video3.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url3, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "4":
                     const video4 = r.videos.slice(3, 4);
-                    var url4 = video4.url;
+                    const url4 = video4.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url4, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "5":
                     const video5 = r.videos.slice(4, 5);
-                    var url5 = video5.url;
+                    const url5 = video5.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url5, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
