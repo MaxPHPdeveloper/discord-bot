@@ -11,9 +11,9 @@ client.once("ready", () => {
 
 client.on("message", async message => {
     if (message.content.startsWith("!play")) {
-        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
+        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
-            var arg = String(message.content.replace("!play ", ""));
+            var arg = message.content.replace("!play ", "");
             console.log(arg);
             var r = (await yts(arg));
             var videos = r.videos.slice(0, 1);
@@ -32,7 +32,7 @@ client.on("message", async message => {
     }
     else if (message.content.startsWith("!youtube")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
-        var arg = String(message.content.replace("!youtube ", ""));
+        var arg = message.content.replace("!youtube ", "");
         var r = (await yts(arg));
         var videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
@@ -45,35 +45,35 @@ client.on("message", async message => {
             switch (collected.first().content) {
                 case "1":
                     var video1 = r.videos.slice(0, 1);
-                    var url1 = String(video1.url);
+                    var url1 = video1.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url1, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "2":
                     var video2 = r.videos.slice(1, 2);
-                    var url2 = String(video2.url);
+                    var url2 = video2.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url2, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "3":
                     var video3 = r.videos.slice(2, 3);
-                    var url3 = String(video3.url);
+                    var url3 = video3.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url3, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "4":
                     var video4 = r.videos.slice(3, 4);
-                    var url4 = String(video4.url);
+                    var url4 = video4.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url4, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
                     break;
                 case "5":
                     var video5 = r.videos.slice(4, 5);
-                    var url5 = String(video5.url);
+                    var url5 = video5.url;
                     message.member.voice.channel.join().then(connection => {
                         connection.play(ytdl(url5, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
                     });
@@ -88,8 +88,8 @@ client.on("message", async message => {
         });
     }
     else if (message.content.startsWith("!stop")) {
-        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
-            (connection => { connection.disconnect(); });
+        if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
+            //da finire
     }
     else if (message.content.startsWith("!help")) {
         return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t              | per fermare la coda\n\nASSGHARAAA`);
