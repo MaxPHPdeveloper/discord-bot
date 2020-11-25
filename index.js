@@ -12,19 +12,18 @@ client.once("ready", () => {
 client.on("message", async message => {
     if (message.content.startsWith("!play")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`)
-        const connection = message.member.voice.channel.join();
+        const connection = await message.member.voice.channel.join();
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             const arg = message.content.replace("!play ", "");
             const r = await yts(arg);
             const videos = r.videos.slice(0, 1);
             var url = videos.url;
             console.log(url);
-            connection.play(ytdl(url, { filter: "audioonly" }));
+            connection.playFile(ytdl(url, { filter: "audioonly" }));
         }
         else {
             var url = message.content.replace("!play ", "");
-            console.log(url);
-            connection.play(ytdl(url, { filter: "audioonly" }));
+            connection.playFile(ytdl(url, { filter: "audioonly" }));
         }
     }
     else if (message.content.startsWith("!youtube")) {
@@ -44,7 +43,7 @@ client.on("message", async message => {
         //da finire, manca la queue da stoppare
     }
     else if (message.content.startsWith("!help")) {
-        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| per fermare la coda\n\nASSGHARAAA`);
+        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| per fermare la coda\n\nASSGHARAAA`);
     }
     else if (!message.author.bot) return message.channel.send(`Coooos? Usa !help per scoprire tutti i comandi disponibili.`);
 });
