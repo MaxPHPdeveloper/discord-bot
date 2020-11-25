@@ -34,12 +34,12 @@ client.on("message", async message => {
         var r = (await yts(arg));
         var videos = r.videos.slice(0, 5), i = 1;
         videos.forEach(function (v) {
-            message.channel.send(`${i}° | ${v.title} (${v.timestamp}) | ${v.author.name}`);
+            message.channel.send(`${i}) | ${v.title} (${v.timestamp}) | ${v.author.name}`);
             i++;
         })
         message.channel.send(`Scegli un numero da 1 a 5.`);
         const filter = m => m.author.id === message.author.id;
-        message.channel.awaitMessages(filter, { max: 1, time: 10000, }).then(async (collected) => {
+        message.channel.awaitMessages(filter, { max: 1, time: 30000, }).then(async (collected) => {
             switch (collected.first().content) {
                 case "1":
                     var video1 = r.videos.slice(0, 1);
