@@ -48,23 +48,23 @@ client.on("message", async message => {
         let collected = await message.channel.awaitMessages(filter, { max: 1, time: 60000, });
         switch (collected.first().content) {
             case "1":
-                addQueue(link[1]);
+                addQueue(links[1]);
                 message.channel.send(`Added to queue.`);
                 break;
             case "2":
-                addQueue(link[2]);
+                addQueue(links[2]);
                 message.channel.send(`Added to queue.`);
                 break;
             case "3":
-                addQueue(link[3]);
+                addQueue(links[3]);
                 message.channel.send(`Added to queue.`);
                 break;
             case "4":
-                addQueue(link[4]);
+                addQueue(links[4]);
                 message.channel.send(`Added to queue.`);
                 break;
             case "5":
-                addQueue(link[5]);
+                addQueue(links[5]);
                 message.channel.send(`Added to queue.`);
                 break;
 
