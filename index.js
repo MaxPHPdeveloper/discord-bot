@@ -16,6 +16,7 @@ client.on("message", async message => {
             var arg = message.content.replace("!play ", "");
             console.log(arg);
             var r = (await yts(arg));
+            console.log(yts(arg));
             var videos = r.videos.slice(0, 1);
             var url = videos.url;
             console.log(url);
