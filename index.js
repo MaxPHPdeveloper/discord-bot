@@ -17,11 +17,13 @@ client.on("message", async message => {
             const arg = message.content.replace("!play ", "");
             const r = await yts(arg);
             const videos = r.videos.slice(0, 1);
-            const url = videos.url;
+            var url = videos.url;
+            console.log(url);
             connection.play(ytdl(url, { filter: "audioonly" }));
         }
         else {
-            const url = message.content.replace("!play ", "");
+            var url = message.content.replace("!play ", "");
+            console.log(url);
             connection.play(ytdl(url, { filter: "audioonly" }));
         }
     }
@@ -42,7 +44,7 @@ client.on("message", async message => {
         //da finire, manca la queue da stoppare
     }
     else if (message.content.startsWith("!help")) {
-        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t| fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t\t| per fermare la coda\n\nASSGHARAAA`);
+        return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t| per fermare la coda\n\nASSGHARAAA`);
     }
     else if (!message.author.bot) return message.channel.send(`Coooos? Usa !help per scoprire tutti i comandi disponibili.`);
 });
