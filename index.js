@@ -15,7 +15,6 @@ client.on("message", async message => {
     if (message.content.startsWith("!play")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
 
-        /*
         //se non è un link
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             var arg = message.content.replace("!play ", "");
@@ -26,7 +25,6 @@ client.on("message", async message => {
                 connection.play(ytdl(url, { filter: "audioonly" }));
             });
         }
-        */
 
         //se è un link
         else {
@@ -151,17 +149,17 @@ client.on("message", async message => {
     function play(queue, d) {
         console.log(queue);
         message.member.voice.channel.join().then(connection => {
-            isPlaying = true;
-            connection.play(ytdl(queue[d], { filter: "audioonly" }).on("end", function () {
-                if (queue[1] != undefined) {
-                    queue.shift();
-                    play(queue, 0);
-                }
-                else {
-                    connection.disconnect;
-                    clearQueue();
-                }
-            }));
+            if (!connection.dispatcher) {
+                connection.play(ytdl(queue[d], { filter: "audioonly" }).on("end", function () {
+                    if (queue[1] != undefined) {
+                        queue.shift();
+                        play(queue, 0);
+                    }
+                }));
+            }
+            else {
+                return;
+            }
         });
     }
 });
