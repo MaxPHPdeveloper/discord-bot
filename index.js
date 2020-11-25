@@ -18,13 +18,13 @@ client.on("message", async message => {
             const videos = r.videos.slice(0, 1);
             var url = videos.url;
             message.member.voice.channel.join().then(connection => {
-                connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                connection.play(ytdl(url, { filter: "audioonly" }));
             });
         }
         else {
             var url = message.content.replace("!play ", "");
             message.member.voice.channel.join().then(connection => {
-                connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                connection.play(ytdl(url, { filter: "audioonly" }));
             });
         }
     }
@@ -47,27 +47,27 @@ client.on("message", async message => {
             switch (collected.first().content) {
                 case "1":
                     message.member.voice.channel.join().then(connection => {
-                        connection.play(ytdl(links[1], { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                        connection.play(ytdl(links[1], { filter: "audioonly" }));
                     });
                     break;
                 case "2":
                     message.member.voice.channel.join().then(connection => {
-                        connection.play(ytdl(links[2], { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                        connection.play(ytdl(links[2], { filter: "audioonly" }));
                     });
                     break;
                 case "3":
                     message.member.voice.channel.join().then(connection => {
-                        connection.play(ytdl(links[3], { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                        connection.play(ytdl(links[3], { filter: "audioonly" }));
                     });
                     break;
                 case "4":
                     message.member.voice.channel.join().then(connection => {
-                        connection.play(ytdl(links[4], { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                        connection.play(ytdl(links[4], { filter: "audioonly" }));
                     });
                     break;
                 case "5":
                     message.member.voice.channel.join().then(connection => {
-                        connection.play(ytdl(links[5], { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                        connection.play(ytdl(links[5], { filter: "audioonly" }));
                     });
                     break;
 
