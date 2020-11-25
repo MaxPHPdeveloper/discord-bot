@@ -14,14 +14,19 @@ client.on("message", async message => {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
         if (!message.content.includes("https://www.youtube.com/" || "www.youtube.com")) {
             var arg = message.content.replace("!play ", "");
-            var r = (await yts(arg)).then( videos => {
-                var videos = r.videos.slice(0, 1); 
+            searchUrl(arg).then(r => {
+                var videos = r.videos.slice(0, 1);
                 var url = videos.url;
-                console.log(url);
+                message.member.voice.channel.join().then(connection => {
+                    connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
+                });
+            });
+            /*
+            var videos = r.videos.slice(0, 1);
+            var url = videos.url;
             message.member.voice.channel.join().then(connection => {
                 connection.play(ytdl(url, { filter: "audioonly" }).on("finish", () => connection.disconnect()));
-            });
-            });
+            });*/
         }
         else {
             var url = message.content.replace("!play ", "");
@@ -89,11 +94,16 @@ client.on("message", async message => {
     }
     else if (message.content.startsWith("!stop")) {
         if (!message.member.voice.channel) return message.channel.send(`Devi essere in un canale vocale per usare questo comando.`);
-            //da finire
+        //da finire
     }
     else if (message.content.startsWith("!help")) {
         return message.channel.send(`No Billie ascolta...con kuesto locdaun si tromba a fatica ehhh. Comandi disponibili:\n\n\n1) !play [link] oppure [nome video]\t\t\t| per ascoltare musica\n2) !youtube [nome video]\t\t\t\t\t\t\t | fornisce i primi 5 risultati di youtube\n3) !stop\t\t\t\t\t\t\t\t\t\t\t\t              | per fermare la coda\n\nASSGHARAAA`);
     }
 });
+
+function searchUrl(arg) {
+    var r = (await yts(arg));
+    return r;
+}
 
 client.login(process.env.TOKEN);
