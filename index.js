@@ -1,29 +1,32 @@
 const Discord = require("discord.js");
-const bot = new Discord.Client();
+const client = new Discord.Client();
 const { Player } = require("discord-player");
-const player = new Player(bot);
+const player = new Player(client);
 
-bot.player = player;
+client.player = player;
+client.player.on('trackStart', (message, track) => message.channel.send(`Now playing ${track.title}...`))
  
-bot.on("ready", () => {
-    console.log("Ready!");
+client.on("ready", () => {
+    console.log("I'm ready !");
 });
  
-bot.on("message", async (message) => {
-    const prefix = "!";
+client.on("message", async (message) => {
+    const prefix ="!";
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+ 
     // !play Despacito
     // will play "Despacito" in the member voice channel
+ 
     if(command === "play"){
-        let track = await bot.player.play(message.member.voice.channel, args[0], message.member.user.tag);
-        message.channel.send(`Currently playing ${track.name}!  - Requested by ${track.requestedBy}`)
+        client.player.play(message, args[0], message.member.user);
     }
     if(command === "stop"){
-        let track = await bot.player.stop(message.guild.id);
-        message.channel.send(`Stopped the queue`)
+        client.player.stop(message.guild.id);
+        message.channel.send("Stopped.")
     }
+    
+ 
 });
 
-
-bot.login(process.env.TOKEN);
+client.login(process.env.TOKEN);
