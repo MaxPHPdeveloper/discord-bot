@@ -2,12 +2,12 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const client = new Discord.Client()
 
-const config = require("./config.js"); //The bot connects using the configuration file
+const config = require("./config.js");
 
 
-const { Player } = require("discord-player"); //Create a new Player (Youtube API key is your Youtube Data v3 key)
+const { Player } = require("discord-player");
 
-const player = new Player(client); //To easily access the player
+const player = new Player(client);
 
 client.player = player;
 client.commands = new Discord.Collection();
@@ -17,13 +17,9 @@ client.emotes = client.config.emotes;
 client.colors = client.config.colors;
 
 fs.readdir("./commands/", (err, files) => {
-    //it will filter all the files in commands directory with extension .js
     let jsfile = files.filter(f => f.split(".").pop() === "js")
-    //this will be executed if there is no files in command folder with extention .js
     if(jsfile.length <= 0) return console.log("Could not find any commands!");
-    //it's similar to for loop
     jsfile.forEach((f, i) => { 
-     //it will log all the file names with extension .js
     console.log(`Loaded ${f}!`);
         
     let pull = require(`./commands/${f}`);
@@ -35,9 +31,8 @@ fs.readdir("./commands/", (err, files) => {
 })});
 
 client.on("ready", () => {
-    console.log("Ready!"); //If the bot is ready it sends a message in the console
-    //It will set the bot status to streaming
-    client.user.setPresence({status: "dnd", activity: { name: "Alla cavallina con le fike bianke", type: "PLAYING"}});
+    console.log("Ready!");
+    client.user.setPresence({status: "dnd", activity: { name: "la cavallina con le fike bianke", type: "PLAYING"}});
 });
 
 client.on('message', async message => {
@@ -54,7 +49,7 @@ client.on('message', async message => {
    try {
      commandFile.run(client, message, args, config.prefix);
    } catch(e) {
-     return message.channel.send(`An error occured on ${command}:\n ${e.message}`)
+     return message.channel.send(`Billie è successo un casino a ${command}:\n ${e.message}`)
    }    
 });
 
