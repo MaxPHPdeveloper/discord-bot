@@ -9,7 +9,7 @@ if (message.guild.me.voice.channel && message.member.voice.channel.id !== messag
 let query = args.join(" ");
 if (!query) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Please enter a query to search!` }})
 
-const searchTracks = await client.player.searchTracks(query).catch(e => {
+const searchTracks = await client.player.searchResults(query).catch(e => {
   return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | No results found!`}})
 });
 
