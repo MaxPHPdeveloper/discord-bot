@@ -28,6 +28,7 @@ client.on("message", async message => {
 
         //se è un link
         else {
+                var url = message.content.replace("!play ", "");
                 queue[d] = url;
                 play(queue);
         }
