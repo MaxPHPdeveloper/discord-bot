@@ -4,6 +4,7 @@ const { Player } = require("discord-player");
 const player = new Player(client);
 
 client.player = player;
+console.log(message);
 client.player.on('trackStart', (message, track) => message.channel.send(`Now playing ${track.title}...`))
  
 client.on("ready", () => {
