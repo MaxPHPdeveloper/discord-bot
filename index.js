@@ -108,7 +108,7 @@ client.on("message", async message => {
         console.log(queue);
         message.member.voice.channel.join().then(connection => {
             console.log(queue);
-            console.log(connection.dispatcher);
+            console.log(connection);
             if (!connection.dispatcher) {
                 connection.play(ytdl(queue[0], { filter: "audioonly" }).on("end", function () {
                     if (queue[1] != undefined) {
